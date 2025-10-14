@@ -1,0 +1,27 @@
+##################################################################
+# GitHub Actions Workflow: Step Types
+# This workflow demonstrates how can you use different step types 
+# in a GitHub Actions workflow.
+##################################################################
+
+name: Step Types Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  say-hello-inline-bash:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Hello from an inline bash script!"
+    
+  say-hello-inline-python:
+    runs-on: ubuntu-24-04
+    steps:
+      - run: print("Hello from an inline Python")
+        shell: python
+
+    say-hello-action:
+      runs-on: ubuntu-24.04
+      steps:
+        - uses: actions/hello-world-javascript-action@main

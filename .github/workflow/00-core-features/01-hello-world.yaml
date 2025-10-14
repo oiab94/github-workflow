@@ -1,0 +1,12 @@
+name: Hello World Workflow
+
+# This workflow is triggered manually 
+on:
+  workflow_dispatch:
+
+# Define the jobs to be run in this workflow
+jobs:
+  say-hello-inline-bash:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Hello from an inline bash script!"

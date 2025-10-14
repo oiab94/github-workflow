@@ -15,7 +15,7 @@ on:
       # Only trigger if files in the 00-core-features folder are changed 
       - "00-core-features/*.md"
       # Exclude all files in the docs folder
-      - "!00-core-features/docs/**"
+      - "!00-core-features/**"
 
   workflow_dispatch:
 

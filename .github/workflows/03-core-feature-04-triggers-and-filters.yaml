@@ -1,0 +1,29 @@
+name: Triggered events
+
+on:
+  push:
+    branches:
+      - included-branch
+  
+  pull_request:
+    # Only trigger on these actions
+    types:
+      - opened        # when a PR is created
+      - synchronize   # when a branch is updated (new commits pushed)
+      - reopened      # when a PR is reopened
+    paths:
+      # Only trigger if files in the 00-core-features folder are changed 
+      - "00-core-features/*.md"
+      # Exclude all files in the docs folder
+      - "!00-core-features/docs/**"
+
+  workflow_dispatch:
+
+jobs:
+  echo-event:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Dump full event JSON
+        run: |
+          echo "=== $GITHUB_EVENT_NAME payload ==="
+          cat "$GITHUB_EVENT_PATH"

@@ -1,0 +1,43 @@
+##################################################################
+# This workflow demonstrates the structure of workflows, jobs, 
+# and steps in GitHub Actions.
+##################################################################
+
+name: Workflows, Jobs, and Steps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job-1:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Step 1 in Job 1
+        run: echo "This is Step 1 in Job 1"
+
+      - name: Step 2 in Job 1
+        run: echo "This is Step 2 in Job 1"
+
+  job-2:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Step 1 in Job 2
+        run: echo "This is Step 1 in Job 2"
+    
+  job-3:
+    runs-on: ubuntu-24.04
+    needs:
+      - job-1
+      - job-2
+    steps:
+      - name: Step 1 in Job 3
+        run: echo "This is Step 1 in Job 3, which runs after Job 1 and Job 2"
+  
+  job-4:
+    runs-on: ubuntu-24.04
+    needs: 
+      - job-2
+      - job-3
+    steps:
+      - name: Step 1 in Job 4
+        run: echo "This is Step 1 in Job 4, which runs after Job 3"

@@ -1,0 +1,35 @@
+name: Passing variables between jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  key-producer:
+    runs-on: ubuntu-24.04
+    outputs:
+      key: ${{ steps.generate-example-key.outputs.key }}
+    steps:
+      - name: Generate and export a key
+        id: generate-example-key
+        run: |
+          key=example-key-generated
+
+          # 1) Step output (for job output)
+          echo "foo=${key}" >> $GITHUB_OUTPUT
+
+          # 2) Job-scoped environemnt variable
+          echo "FOO=${key}" >> $GITHUB_ENV
+
+      - name: Inspect values inside producer
+        run: |
+          echo "FOO (set via GITHUB_ENV):  $FOO"
+          echo "foo (step output):         ${{ steps.generate-example-key.outputs.key }}"
+    
+  consumer:
+    runs-on: ubuntu-24.04
+    needs: key-producer
+    steps:
+      - name: Inspect values inside consumer (note FOO is unset)
+        run: |
+          echo "Value from key-producer:    ${{ needs.key-producer.outputs.key }}"
+          echo "FOO in consume:             ${ FOO: -<UNSET> }"

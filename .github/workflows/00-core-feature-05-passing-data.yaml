@@ -15,21 +15,21 @@ jobs:
           key=example-key-generated
 
           # 1) Step output (for job output)
-          echo "foo=${key}" >> $GITHUB_OUTPUT
+          echo "key=${key}" >> $GITHUB_OUTPUT
 
           # 2) Job-scoped environemnt variable
-          echo "FOO=${key}" >> $GITHUB_ENV
+          echo "KEY=${key}" >> $GITHUB_ENV
 
       - name: Inspect values inside producer
         run: |
-          echo "FOO (set via GITHUB_ENV):  $FOO"
+          echo "FOO (set via GITHUB_ENV):  $KEY"
           echo "foo (step output):         ${{ steps.generate-example-key.outputs.key }}"
     
   consumer:
     runs-on: ubuntu-24.04
     needs: key-producer
     steps:
-      - name: Inspect values inside consumer (note FOO is unset)
+      - name: Inspect values inside consumer 
         run: |
-          echo "Value from key-producer:    ${{ needs.key-producer.outputs.foo }}"
-          echo "FOO in consume:             ${FOO:-<UNSET>}"
+          echo "Value from key-producer:    ${{ needs.key-producer.outputs.key }}"
+          echo "KEY in consume:             ${KEY:-<UNSET>}"

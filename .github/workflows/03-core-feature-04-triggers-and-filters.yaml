@@ -1,20 +1,25 @@
+###################################################################
+# When a PR is opened, synchronized, or reopened and files in the #
+# 00-core-features/ directory are changed (excluding .txt files)  #
+###################################################################
+
 name: Triggered events
 
 on:
   push:
     branches:
-      - included-branch
+      - "included-branch/*"
   
   pull_request:
     # Only trigger on these actions
     types:
       - opened        # when a PR is created
-      - synchronize   # when a branch is updated (new commits pushed)
+      - synchronize   # when a PR is synchronized (new commits pushed)
       - reopened      # when a PR is reopened
     paths:
-      # Only trigger if files in the 00-core-features folder are changed 
+      # Only trigger if file are changed 
       - "00-core-features/*.md"
-      # Exclude all files in the docs folder
+      # Exclude all files with .txt extension
       - "!00-core-features/*.txt"
 
   workflow_dispatch:

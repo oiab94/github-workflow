@@ -32,4 +32,4 @@ jobs:
       - name: Inspect values inside consumer (note FOO is unset)
         run: |
           echo "Value from key-producer:    ${{ needs.key-producer.outputs.key }}"
-          echo "FOO in consume:             ${ FOO: -<UNSET> }"
+          echo "FOO in consume:             ${ FOO:-<UNSET> }"
